@@ -17,7 +17,6 @@ const User = require("../../models/User");
 // @access Public
 router.post("/register", (req, res) => {
   // Form validation
-
   const { errors, isValid } = validateRegisterInput(req.body);
 
   // Check validation
@@ -32,7 +31,8 @@ router.post("/register", (req, res) => {
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        deviceId: req.body.deviceId
       });
 
       // Hash password before saving in database
@@ -88,7 +88,7 @@ router.post("/login", (req, res) => {
           payload,
           keys.secretOrKey,
           {
-            expiresIn: 31556926 // 1 year in seconds
+            expiresIn: 9999999  //arbitrary long time span
           },
           (err, token) => {
             res.json({

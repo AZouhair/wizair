@@ -2,27 +2,22 @@ import React, {Component} from 'react';
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
-import ImportantCard from './ImportantCard';
+import Card from './Card';
 import Measures from './Measures';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import { getData} from "../../actions/dataActions";
 
 function Copyright() {
   return (
@@ -123,7 +118,7 @@ class Dashboard extends Component {
     super(props);
     this.state ={
       auth : true,
-      open: true,
+      data: {}
     }
   };
 
@@ -133,12 +128,22 @@ class Dashboard extends Component {
     this.props.logoutUser();
   };
 
-
+  componentDidMount(){
+    if (this.props.auth.isAuthenticated) {
+      this.props.getData(this.props.auth.id)
+    }
+  }
+  
   
   render(){
-    const {user} = this.props.auth; //just in case
+    const {data} = this.props.data
     const { classes } = this.props;
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  // we wait until the data is populated before fetching
+  if (!data.length){
+    return null
+  } 
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -152,52 +157,50 @@ class Dashboard extends Component {
             </Button>
           </Toolbar>
         </AppBar>
-        <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        anchor="left"
-      >
-        <div className={classes.appBarSpacer} />
-        <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
-      </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Important card */}
+            {/* Card O3*/}
             <Grid item xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
-                <ImportantCard />
+                <Card element="O3" data={data[0]["O3"]} />
               </Paper>
             </Grid>
-            {/* Important card */}
+            {/* Card NO2*/}
             <Grid item xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
-                <ImportantCard />
+                <Card element="NO2" data={data[0]["NO2"]}/>
               </Paper>
             </Grid>
-            {/* Important card */}
+            {/* Card pm25*/}
             <Grid item xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
-                <ImportantCard />
+                <Card element="pm25" data={data[0]["pm25"]}/>
               </Paper>
             </Grid>
-            {/* Chart */}
+            {/* Chart O3*/}
             <Grid item xs={12} md={12} lg={12}>
               <Paper className={fixedHeightPaper}>
-                <Chart />
+                <Chart element="O3" data={data} />
               </Paper>
             </Grid>
-            {/* Recent Orders */}
+            {/* Chart NO2*/}
+            <Grid item xs={12} md={12} lg={12}>
+              <Paper className={fixedHeightPaper}>
+                <Chart element="NO2" data={data}/>
+              </Paper>
+            </Grid>
+            {/* Chart pm25*/}
+            <Grid item xs={12} md={12} lg={12}>
+              <Paper className={fixedHeightPaper}>
+                <Chart element="pm25" data={data}/>
+              </Paper>
+            </Grid>
+            {/* Recent Measures*/}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Measures />
+                <Measures data={data}/>
               </Paper>
             </Grid>
           </Grid>
@@ -214,15 +217,19 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  getData: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
+  data: state.data,
   auth: state.auth
 });
 
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser,
+  getData }
 )(withStyles(styles)(Dashboard));

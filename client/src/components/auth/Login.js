@@ -53,7 +53,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%', 
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -103,7 +103,7 @@ componentDidMount() {
       password: this.state.password
     };
 
-  this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
+  this.props.loginUser(userData); 
   };
   
   render(){

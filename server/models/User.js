@@ -15,10 +15,10 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  date: {
-    type: Date,
-    default: Date.now
-  }
+  deviceId :{
+    type: String,
+    default: "none"
+   }
 });
 
 module.exports = User = mongoose.model("users", UserSchema);

@@ -57,6 +57,7 @@ class SignUp extends Component {
       email: "",
       password: "",
       password2: "",
+      deviceId: "",
       errors: {},
     };
   }
@@ -87,6 +88,7 @@ class SignUp extends Component {
       email: this.state.email,
       password: this.state.password,
       password2: this.state.password2,
+      deviceId: this.state.deviceId
     };
   
     this.props.registerUser(newUser, this.props.history); 
@@ -171,6 +173,21 @@ class SignUp extends Component {
                 onChange={this.onChange}
                 error = {errors.password2 }
                 helperText={errors.password2}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="deviceId"
+                label="Password Confirmation"
+                type="name"
+                id="deviceId"
+                value={this.state.deviceId}
+                onChange={this.onChange}
+                error = {errors.password2 }
+                helperText={errors.deviceId}
               />
             </Grid>
           </Grid>

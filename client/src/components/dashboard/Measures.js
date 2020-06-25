@@ -1,6 +1,4 @@
 import React from 'react';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,63 +6,61 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 
-// Generate Order Data
-function createData(id, date, time, measure1, measure2, measure3, grade) {
-  return { id, date, time, measure1, measure2, measure3, grade };
+
+function createData(id, time, pm25, O3, NO2, average) {
+  return { id, time, pm25, O3, NO2, average };
 }
 
-const rows = [
-  createData(0, '16 Mar, 2019','18:06:54', '***', '***', '****', 16.43),
-  createData(1, '16 Mar, 2019', '18:06:54','***', '***', '****', 26.99),
-  createData(2, '16 Mar, 2019', '18:06:54','***', '***', '****', 20.81),
-  createData(3, '16 Mar, 2019',  '18:06:54','***', '***', '****', 24.39),
-  createData(4, '15 Mar, 2019', '18:06:54', '***', '***', '****', 19.79),
-];
-
-function preventDefault(event) {
-  event.preventDefault();
+function createRows(data){
+  let result = [];
+  let i = 0
+  data.forEach(e => {
+    result.push(createData(i, e["date"], e["pm25"], e["O3"], e["NO2"], 
+                          (parseFloat(e["pm25"])+parseFloat(e["O3"])+parseFloat(e["NO2"]))/3)
+    ); 
+    i++
+    })
+  return result
 }
 
-const useStyles = makeStyles(theme => ({
-  seeMore: {
-    marginTop: theme.spacing(3),
-  },
-}));
+// const mockRows = [
+//   createData(0, '16 Mar, 2019','18:06:54', '***', '***', '****', 16.43),
+//   createData(1, '16 Mar, 2019', '18:06:54','***', '***', '****', 26.99),
+//   createData(2, '16 Mar, 2019', '18:06:54','***', '***', '****', 20.81),
+//   createData(3, '16 Mar, 2019',  '18:06:54','***', '***', '****', 24.39),
+//   createData(4, '15 Mar, 2019', '18:06:54', '***', '***', '****', 19.79),
+// ];
 
-export default function Measures() {
-  const classes = useStyles();
+
+
+
+export default function Measures(props) {
+  const rows = createRows(props.data);
   return (
     <React.Fragment>
       <Title>Recent Measures</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
             <TableCell>Time</TableCell>
-            <TableCell>Element 1</TableCell>
-            <TableCell>Element 2</TableCell>
-            <TableCell>Element 3</TableCell>
-            <TableCell align="right">Grade</TableCell>
+            <TableCell>pm25</TableCell>
+            <TableCell>O3</TableCell>
+            <TableCell>NO2</TableCell>
+            <TableCell align="right">Average</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map(row => (
             <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
               <TableCell>{row.time}</TableCell>
-              <TableCell>{row.measure1}</TableCell>
-              <TableCell>{row.measure2}</TableCell>
-              <TableCell>{row.measure3}</TableCell>
-              <TableCell align="right">{row.grade}</TableCell>
+              <TableCell>{row.pm25}</TableCell>
+              <TableCell>{row.O3}</TableCell>
+              <TableCell>{row.NO2}</TableCell>
+              <TableCell align="right">{row.average}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          See more measures
-        </Link>
-      </div>
     </React.Fragment>
   );
 }
