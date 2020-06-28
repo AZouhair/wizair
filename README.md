@@ -1,6 +1,8 @@
 # wizair MERN app
 
-React/Redux client
+React/Redux client.
+
+SCSS from Creative Tim.
 
 
 ![Alt text](/img/LandingPage.png?raw=true "Optional Title")
