@@ -9,7 +9,7 @@ React/Redux client
 
 
 
-Backend with Node.js.
+Backend with Node.js. \n
 Express for the webserver.
 Mongodb + mongoose for the data.
 Passport.js + webtoken for the identification
