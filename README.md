@@ -1,4 +1,4 @@
-# wizair MERN app
+# wizair app
 
 React/Redux client.
 
