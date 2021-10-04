@@ -4,9 +4,12 @@ React/Redux client.
 
 SCSS from Creative Tim.
 
+Landing page:
 
 ![Alt text](/img/LandingPage.png?raw=true "Optional Title")
 
+
+Dashboard:
 
 ![image](https://user-images.githubusercontent.com/34556770/135856190-1ed26fb0-0428-434e-88a5-13d5d5c97d02.png)
 
@@ -16,13 +19,13 @@ SCSS from Creative Tim.
 Backend with Node.js. 
 
 
-Express for the webserver.
+Express for the web server.
 
 
 Mongodb + mongoose for the data.
 
 
-Passport.js + webtoken for the identification.
+Passport.js + webtoken for the authentication.
 
 
 Mock data has been added for the front end to be able to display something. When the sensors that goes with the project works, this mock data is useless.
