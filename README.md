@@ -8,8 +8,8 @@ SCSS from Creative Tim.
 ![Alt text](/img/LandingPage.png?raw=true "Optional Title")
 
 
+![image](https://user-images.githubusercontent.com/34556770/135856190-1ed26fb0-0428-434e-88a5-13d5d5c97d02.png)
 
-![Alt text](/img/Dashboard.png?raw=true "Optional Title")
 
 
 
@@ -25,9 +25,9 @@ Mongodb + mongoose for the data.
 Passport.js + webtoken for the identification.
 
 
+Mock data has been added for the front end to be able to display something. When the sensors that goes with the project works, this mock data is useless.
 
-
-
+Can be run directly with docker-compose `docker-compose build` then `docker-compose up`
 
 
 
