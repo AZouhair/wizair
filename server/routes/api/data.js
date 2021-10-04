@@ -1,12 +1,8 @@
-const express = require("express");
-const router = express.Router();
-
-
+import { Router } from "express";
 // Load User model
-const Data = require("../../models/Data");
+import Data from "../../models/Data.js";
 
-
-
+const router = Router();
 
 router.get("/", function (req, res) {
     
@@ -20,4 +16,4 @@ router.get("/", function (req, res) {
     
 });
 
-module.exports = router;
+export default router;

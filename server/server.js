@@ -1,27 +1,30 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const passport = require("passport");
+import express from "express";
+import pkg_mongoose from 'mongoose';
+import pkg_bp from 'body-parser';
+import passport from "passport";
 
-const users = require("./routes/api/users");
-const data = require("./routes/api/data");
+import { mongoURI as db } from "./config/keys.js";
+import { config_passport } from "./config/passport.js";
+import users from "./routes/api/users.js";
+import data from "./routes/api/data.js";
 
+
+const { connect } = pkg_mongoose;
+const { urlencoded, json } = pkg_bp;
 const app = express();
 
 // Bodyparser middleware
 app.use(
-  bodyParser.urlencoded({
+  urlencoded({
     extended: false
   })
 );
-app.use(bodyParser.json());
+app.use(json());
 
 // DB Config
-const db = require("./config/keys").mongoURI;
 
 // Connect to MongoDB
-mongoose
-  .connect(
+connect(
     db,
     { useNewUrlParser: true }
   )
@@ -29,12 +32,11 @@ mongoose
   .catch(err => console.log(err));
 
 
-
 // Passport middleware
-app.use(passport.initialize());
+app.use(passport.initialize() );
 
 // Passport config
-require("./config/passport")(passport);
+config_passport(passport);
 
 // Routes
 app.use("/api/users", users);

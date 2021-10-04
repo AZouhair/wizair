@@ -7,6 +7,8 @@ SCSS from Creative Tim.
 
 ![Alt text](/img/LandingPage.png?raw=true "Optional Title")
 
+
+
 ![Alt text](/img/Dashboard.png?raw=true "Optional Title")
 
 

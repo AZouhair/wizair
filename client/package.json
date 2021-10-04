@@ -38,7 +38,7 @@
     "eject": "react-scripts eject",
     "postinstall": "npm rebuild node-sass"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "http://server:5000/",
   "eslintConfig": {
     "extends": "react-app"
   },

@@ -1,5 +1,8 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import pkg from 'mongoose';
+
+const { Schema: _Schema, model } = pkg;
+
+const Schema = _Schema;
 
 // Create Schema
 const DataSchema = new Schema({
@@ -24,4 +27,6 @@ const DataSchema = new Schema({
     }
 }, { collection: 'data' }); // specifying the collection name seems necessary else mongoose plurialize it by default (data --> datas)
 
-module.exports = Data = mongoose.model("data", DataSchema);
+
+const Data = model("data", DataSchema);
+export default Data;

@@ -4,8 +4,13 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-EXPOSE 3000
+#RUN npm uninstall node-sass
+#RUN npm install node-sass
+RUN npm install --silent
+RUN npm rebuild node-sass --sass-binary-name=linux-x64-83
 
-RUN npm rebuild node-sass
+COPY . ./
+
+EXPOSE 3000
 
 CMD [ "npm", "start" ]

@@ -8,20 +8,22 @@ function createData(time, amount) {
   return { time, amount };
 }
 
+// Mock data has been added for the sake of presentation, in the real app the data here is the data that has been queried in
+// Dashboard.js
 
-// const mock_data = [
-//   createData('00:00', 17),
-//   createData('03:00', 15),
-//   createData('06:00', 25),
-//   createData('09:00', 20),
-//   createData('12:00', 22),
-//   createData('15:00', 19),
-//   createData('18:00', 25),
-//   createData('21:00', 18),
-//   createData('24:00', undefined),
-// ];
+const mock_data = [
+   createData('00:00', 17),
+   createData('03:00', 15),
+   createData('06:00', 25),
+   createData('09:00', 20),
+   createData('12:00', 22),
+   createData('15:00', 19),
+   createData('18:00', 25),
+   createData('21:00', 18),
+   createData('24:00', undefined),
+ ];
 
-const parse = (arr,element)=>{
+export const parse = (arr,element)=>{
   const result = [];
   arr.forEach(e => result.push(createData(e["date"].substr(e["date"].length - 9),e[element])))
   return result
@@ -29,7 +31,8 @@ const parse = (arr,element)=>{
 
 export default function Chart(props) {
   const theme = useTheme();
-  const data = parse(props.data, props.element) ;
+  //const data = parse(mock_data, props.element) ;
+  const data = mock_data;
   return (
     <React.Fragment>
       <Title>{props.element+" Monitoring" } </Title>

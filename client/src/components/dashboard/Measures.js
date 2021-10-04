@@ -7,32 +7,22 @@ import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 
 
-function createData(id, time, pm25, O3, NO2, average) {
-  return { id, time, pm25, O3, NO2, average };
+function createData(id, time, pm25, O3, NO2, score) {
+  return { id, time, pm25, O3, NO2, score };
 }
 
 function createRows(data){
   let result = [];
   let i = 0
   data.forEach(e => {
-    result.push(createData(i, e["date"], e["pm25"], e["O3"], e["NO2"], 
-                          (parseFloat(e["pm25"])+parseFloat(e["O3"])+parseFloat(e["NO2"]))/3)
+    result.push(createData(i, e["time"], e["pm25"], e["O3"], e["NO2"], 
+      // score function can be way more complex
+      ((2*parseFloat(e["pm25"])+parseFloat(e["O3"])+parseFloat(e["NO2"]))/3).toFixed(2))
     ); 
     i++
     })
   return result
 }
-
-// const mockRows = [
-//   createData(0, '16 Mar, 2019','18:06:54', '***', '***', '****', 16.43),
-//   createData(1, '16 Mar, 2019', '18:06:54','***', '***', '****', 26.99),
-//   createData(2, '16 Mar, 2019', '18:06:54','***', '***', '****', 20.81),
-//   createData(3, '16 Mar, 2019',  '18:06:54','***', '***', '****', 24.39),
-//   createData(4, '15 Mar, 2019', '18:06:54', '***', '***', '****', 19.79),
-// ];
-
-
-
 
 export default function Measures(props) {
   const rows = createRows(props.data);
@@ -46,7 +36,7 @@ export default function Measures(props) {
             <TableCell>pm25</TableCell>
             <TableCell>O3</TableCell>
             <TableCell>NO2</TableCell>
-            <TableCell align="right">Average</TableCell>
+            <TableCell align="right">Score</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -56,7 +46,7 @@ export default function Measures(props) {
               <TableCell>{row.pm25}</TableCell>
               <TableCell>{row.O3}</TableCell>
               <TableCell>{row.NO2}</TableCell>
-              <TableCell align="right">{row.average}</TableCell>
+              <TableCell align="right">{row.score}</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -1,8 +1,9 @@
 {
-  "name": "Wizair",
+  "name": "wizair",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client-install": "npm install --prefix client",

@@ -18,6 +18,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { getData} from "../../actions/dataActions";
+import moment from "moment";
 
 function Copyright() {
   return (
@@ -133,16 +134,49 @@ class Dashboard extends Component {
       this.props.getData(this.props.auth.id)
     }
   }
+
   
   
   render(){
-    const {data} = this.props.data
+    let {data} = this.props.data
+    // Data should be a constant but it was turned into a variable for the sake of presentation
     const { classes } = this.props;
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   // we wait until the data is populated before fetching
   if (!data.length){
-    return null
+    console.log("this is a standalone vernsion without the sensor so instead of a return here we will allow the dashboard to load");
+    data = [ {
+      "time": moment().format("DD-MM-YYYY hh:mm:ss"),
+      "O3": 13,
+      "NO2": 24,
+      "pm25": 42,
+    },
+    {
+      "time": moment().subtract(1, 'h').format("DD-MM-YYYY hh:mm:ss"),
+      "O3": 15,
+      "NO2": 27,
+      "pm25": 40,
+    },
+    {
+      "time": moment().subtract(2, 'h').format("DD-MM-YYYY hh:mm:ss"),
+      "O3": 11,
+      "NO2": 17,
+      "pm25": 35,
+    },
+    {
+      "time": moment().subtract(3, 'h').format("DD-MM-YYYY hh:mm:ss"),
+      "O3": 13,
+      "NO2": 23,
+      "pm25": 46,
+    },
+    {
+      "time": moment().subtract(4, 'h').format("DD-MM-YYYY hh:mm:ss"),
+      "O3": 15,
+      "NO2": 21,
+      "pm25": 47,
+    }
+  ]
   } 
   return (
     <div className={classes.root}>
@@ -164,7 +198,7 @@ class Dashboard extends Component {
             {/* Card O3*/}
             <Grid item xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
-                <Card element="O3" data={data[0]["O3"]} />
+                <Card element="O3" data={data[0]["O3"] } />
               </Paper>
             </Grid>
             {/* Card NO2*/}
@@ -176,7 +210,7 @@ class Dashboard extends Component {
             {/* Card pm25*/}
             <Grid item xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
-                <Card element="pm25" data={data[0]["pm25"]}/>
+                <Card element="pm25" data={data[0]["pm25"] }/>
               </Paper>
             </Grid>
             {/* Chart O3*/}

@@ -175,21 +175,7 @@ class SignUp extends Component {
                 helperText={errors.password2}
               />
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="deviceId"
-                label="Password Confirmation"
-                type="name"
-                id="deviceId"
-                value={this.state.deviceId}
-                onChange={this.onChange}
-                error = {errors.password2 }
-                helperText={errors.deviceId}
-              />
-            </Grid>
+            
           </Grid>
           <Button
             type="submit"

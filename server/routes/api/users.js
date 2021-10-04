@@ -1,21 +1,22 @@
-const express = require("express");
-const router = express.Router();
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const keys = require("../../config/keys");
-const passport = require("passport");
+import { Router } from "express";
+import pkg_bcryptjs from 'bcryptjs';
+import pkg_jwt from 'jsonwebtoken';
+import { secretOrKey } from "../../config/keys.js";
 
 // Load input validation
-const validateRegisterInput = require("../../validation/register");
-const validateLoginInput = require("../../validation/login");
+import validateRegisterInput from "../../validation/register.js";
+import validateLoginInput from "../../validation/login.js";
 
 // Load User model
-const User = require("../../models/User");
+import User from "../../models/User.js";
 
-// @route POST api/users/register
-// @desc Register user
-// @access Public
+const { genSalt, hash: _hash, compare } = pkg_bcryptjs;
+const { sign } = pkg_jwt;
+
+const router = Router();
+
 router.post("/register", (req, res) => {
+
   // Form validation
   const { errors, isValid } = validateRegisterInput(req.body);
 
@@ -32,12 +33,12 @@ router.post("/register", (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        deviceId: req.body.deviceId
+        deviceId: req.body.deviceId || null
       });
 
       // Hash password before saving in database
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
+      genSalt(10, (err, salt) => {
+        _hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;
           newUser.password = hash;
           newUser
@@ -48,13 +49,13 @@ router.post("/register", (req, res) => {
       });
     }
   });
+
+  console.log("end of the register query")
 });
 
-// @route POST api/users/login
-// @desc Login user and return JWT token
-// @access Public
 router.post("/login", (req, res) => {
   // Form validation
+  console.log("The login endpoint has been queried");
 
   const { errors, isValid } = validateLoginInput(req.body);
 
@@ -74,7 +75,7 @@ router.post("/login", (req, res) => {
     }
 
     // Check password
-    bcrypt.compare(password, user.password).then(isMatch => {
+    compare(password, user.password).then(isMatch => {
       if (isMatch) {
         // User matched
         // Create JWT Payload
@@ -84,9 +85,9 @@ router.post("/login", (req, res) => {
         };
 
         // Sign token
-        jwt.sign(
+        sign(
           payload,
-          keys.secretOrKey,
+          secretOrKey,
           {
             expiresIn: 9999999  //arbitrary long time span
           },
@@ -106,4 +107,4 @@ router.post("/login", (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;
