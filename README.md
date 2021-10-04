@@ -28,7 +28,7 @@ Mongodb + mongoose for the data.
 Passport.js + webtoken for the authentication.
 
 
-Mock data has been added for the front end to be able to display something. When the sensors that goes with the project works, this mock data is useless.
+Mock data has been added for the front end to be able to display something. When the sensor that goes with the project works, this mock data is useless.
 
 Can be run directly with docker-compose `docker-compose build` then `docker-compose up`
 
